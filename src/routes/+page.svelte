@@ -1,58 +1,32 @@
 <script>
-    import { LayerCake, Svg } from 'layercake';
-    import { scaleBand, scaleOrdinal } from 'd3-scale';
-  
-    import ClevelandDotPlot from '$lib/components/ClevelandDotPlot.svelte';
-    import AxisX from '$lib/components/AxisX.svelte';
-    import AxisY from '$lib/components/AxisY.svelte';
-  
-    // This example loads csv data as json using @rollup/plugin-dsv
-    import data from '$lib/constants/fruitOrdinal.csv';
+  import AppleBoxPlot from "./AppleBoxPlot.svelte";
+  import appleRatingsGraphic from "$lib/assets/labeled_ratings.svg";
 
-    const yKey = 'year';
-    const xKey = Object.keys(data[0]).filter(d => d !== yKey);
-  
-    const seriesColors = ['#f0c', '#00bbff', '#00e047', '#ff7a33'];
-  
-    data.forEach(d => {
-      xKey.forEach(name => {
-        d[name] = +d[name];
-      });
-    });
-  </script>
-  
-  <style>
-    /*
-      The wrapper div needs to have an explicit width and height in CSS.
-      It can also be a flexbox child or CSS grid element.
-      The point being it needs dimensions since the <LayerCake> element will
-      expand to fill it.
-    */
-    .chart-container {
-      width: 100%;
-      height: 250px;
-    }
-  </style>
-  
-  <div class="chart-container">
-    <LayerCake
-      padding={{ right: 10, bottom: 20, left: 30 }}
-      x={xKey}
-      y={yKey}
-      yScale={scaleBand().paddingInner([0.05]).round(true)}
-      xDomain={[0, null]}
-      xPadding={[10, 0]}
-      zScale={scaleOrdinal()}
-      zDomain={xKey}
-      zRange={seriesColors}
-      data={data}
-    >
-      <Svg>
-        <AxisX/>
-        <AxisY
-          gridlines={false}
-        />
-        <ClevelandDotPlot/>
-      </Svg>
-    </LayerCake>
-  </div>
+</script>
+
+<h1>Title & purpose pending ...</h1>
+<p>Intro text ...</p>
+
+<h2>Approach to ranking</h2>
+<p>Text on how we generated our rankings? Here's what we landed on:</p>
+<div class="ratings-graphic-wrapper">
+  <img src={appleRatingsGraphic} alt="Apple ratings graphic" />
+</div>
+
+
+<h2>Our apple scores</h2>
+<div style="margin: 20px 0px;">
+  <AppleBoxPlot />
+</div>
+
+<style>
+  .ratings-graphic-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+  }
+  .ratings-graphic-wrapper img {
+    width: 800px;
+    max-width: 100%;
+  }
+</style>
