@@ -1,6 +1,5 @@
 <script>
   import "$lib/styles/app.css";
-  export const prerender = true;
 </script>
 
 <div class="wrapper">
