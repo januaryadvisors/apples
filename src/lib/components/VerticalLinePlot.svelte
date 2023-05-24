@@ -3,24 +3,26 @@
   Generates an SVG Cleveland dot plot, also known as a lollipop-chart.
  -->
 <script>
-  import { getContext } from "svelte";
+  import { createEventDispatcher, getContext } from "svelte";
 
-  const { data, xGet, yGet, xScale, zScale, config, height } =
-    getContext("LayerCake");
+  const { data, xGet, yGet, xScale, height } = getContext("LayerCake");
 
   const appleWidth = 20;
   const appleHeight = 20;
 
   $: midLength = $xScale.bandwidth() / 2;
-  $: console.log("YSCALE?", $xScale.bandwidth());
+
+  const dispatch = createEventDispatcher();
 </script>
 
-<g class="dot-plot">
+<g
+  class="dot-plot"
+  on:mouseout={(e) => dispatch("mouseout")}
+  on:blur={(e) => dispatch("mouseout")}
+>
   {#each $data as row}
     {@const yVals = $yGet(row)}
     {@const xVal = $xGet(row)}
-    {@const cool = console.log("yVALS", yVals)}
-    {@const cooler = console.log("xVALS", xVal)}
 
     <g class="dot-row">
       <line
@@ -35,9 +37,12 @@
         x1={xVal + midLength}
         y2={Math.max(...yVals)}
         x2={xVal + midLength}
+        on:mouseover={(e) => dispatch("mousemove", { e, props: row })}
+        on:focus={(e) => dispatch("mousemove", { e, props: row })}
       />
 
       {#each yVals as appleY, i}
+        <!-- Currently, only displaying apple graphic for the mean value (at index 1) -->
         {#if i === 1}
           <svg
             width="{appleWidth}px"
@@ -47,6 +52,8 @@
             viewBox="0 0 202 201"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            on:mouseover={(e) => dispatch("mousemove", { e, props: row })}
+            on:focus={(e) => dispatch("mousemove", { e, props: row })}
           >
             <g filter="url(#filter0_i_7_12)">
               <path

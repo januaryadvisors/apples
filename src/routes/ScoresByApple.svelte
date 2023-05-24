@@ -2,17 +2,21 @@
   /*
     Box plot of apples, with apple SVGs as the chart points
   */
-  import { LayerCake, Svg } from "layercake";
-  import { scaleBand, scaleOrdinal } from "d3-scale";
+  import { Html, LayerCake, Svg } from "layercake";
+  import { scaleBand } from "d3-scale";
   import AxisX from "$lib/components/AxisX.svelte";
   import AxisY from "$lib/components/AxisY.svelte";
 
   // This example loads csv data as json using @rollup/plugin-dsv
   import data from "$lib/constants/appleScores.csv";
-  import VerticalLinePlot from "../lib/components/VerticalLinePlot.svelte";
+  import VerticalLinePlot from "$lib/components/VerticalLinePlot.svelte";
+  import Tooltip from "$lib/components/Tooltip.svelte";
+  import AppleTooltip from "./AppleTooltip.svelte";
 
   const xKey = "apple_name";
   const yKey = Object.keys(data[0]).filter((d) => d !== xKey);
+  let evt; // for tooltip
+  let hideTooltip = true;
 
   data.forEach((d) => {
     yKey.forEach((name) => {
@@ -31,10 +35,21 @@
     yPadding={[10, 0]}
     {data}
   >
+    <!-- Tooltip for showing apple details -->
+    <Html pointerEvents={false}>
+      {#if hideTooltip !== true}
+        <Tooltip {evt} let:detail>
+          <AppleTooltip {detail} />
+        </Tooltip>
+      {/if}
+    </Html>
     <Svg>
       <AxisX gridlines={false} />
       <AxisY gridlines={false} />
-      <VerticalLinePlot />
+      <VerticalLinePlot
+        on:mousemove={(event) => (evt = hideTooltip = event)}
+        on:mouseout={() => (hideTooltip = true)}
+      />
     </Svg>
   </LayerCake>
 </div>
