@@ -1,6 +1,7 @@
 <script>
   import AppleBoxPlot from "./AppleBoxPlot.svelte";
   import appleRatingsGraphic from "$lib/assets/labeled_ratings.svg";
+  import ScoresByApple from "./ScoresByApple.svelte";
 
 </script>
 
@@ -18,6 +19,12 @@
 <div style="margin: 20px 0px;">
   <AppleBoxPlot />
 </div>
+
+<h2>Our apple scores</h2>
+<div style="margin: 20px 0px;">
+  <ScoresByApple />
+</div>
+
 
 <style>
   .ratings-graphic-wrapper {

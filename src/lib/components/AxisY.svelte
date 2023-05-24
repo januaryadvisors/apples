@@ -35,6 +35,8 @@
     export let textAnchor = 'start';
   
     $: isBandwidth = typeof $yScale.bandwidth === 'function';
+
+    $: console.log("TICKS", ticks)
   
     $: tickVals = Array.isArray(ticks) ? ticks :
       isBandwidth ?
