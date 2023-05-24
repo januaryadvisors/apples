@@ -6,7 +6,8 @@
 }
 
 score_raw = read_sheet("https://docs.google.com/spreadsheets/d/1zr41tZnYjpYIjA3aUU0rx8gfFy9bJJYlEGj4SYyFxus/edit#gid=1262248633",
-                        sheet = "2023 scores")
+                        sheet = "2023 scores") %>% 
+  select(-comments)
 apple_raw = read_sheet("https://docs.google.com/spreadsheets/d/1zr41tZnYjpYIjA3aUU0rx8gfFy9bJJYlEGj4SYyFxus/edit#gid=1262248633",
                        sheet = "2023 apples")
 
@@ -40,3 +41,19 @@ score_raw %>%
   labs(y = "taste score (min, mean, max)", 
        x = NULL) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+qc = score_raw %>% 
+  select(type, scorer, "Round 1" = taste, "Round 2" = taste_2) %>% 
+  filter(!is.na(`Round 2`)) %>% 
+  pivot_longer(`Round 1`:`Round 2`) %>% 
+  ggplot(aes(x = name, y = value, color = scorer, group = scorer)) + 
+  geom_point() +
+  geom_line() +
+  facet_wrap(~type) +
+  theme_ja() +
+  labs(x = NULL, y = "taste score",
+       title = "Quality control provedNot a huge amount of interna")
+qc
+
+score_raw %>% 
+  pivot_longer(appearance:taste)
