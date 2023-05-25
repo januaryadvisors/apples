@@ -143,8 +143,9 @@
 
 <style>
   line {
-    stroke-width: 3px;
-    stroke: #65af70;
+    stroke-width: 7px;
+    stroke: #eed8a0;
+    stroke-linecap: round;
   }
   line.light {
     stroke-width: 1px;
