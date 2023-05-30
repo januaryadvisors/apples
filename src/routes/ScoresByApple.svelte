@@ -8,12 +8,18 @@
   import AxisY from "$lib/components/AxisY.svelte";
 
   // This example loads csv data as json using @rollup/plugin-dsv
-  import data from "$lib/constants/appleScores.csv";
+  import rawData from "$lib/constants/summaryScores.csv";
   import VerticalLinePlot from "$lib/components/VerticalLinePlot.svelte";
   import Tooltip from "$lib/components/Tooltip.svelte";
   import AppleTooltip from "./AppleTooltip.svelte";
 
-  const xKey = "apple_name";
+  let data = rawData.filter(appleRow => appleRow.metric === 'taste').map((appleRow) => {
+
+    const { metric, ...coreAppleData } = appleRow;
+    return coreAppleData;
+  });
+
+  const xKey = "apple_type";
   const yKey = Object.keys(data[0]).filter((d) => d !== xKey);
   let evt; // for tooltip
   let hideTooltip = true;

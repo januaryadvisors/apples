@@ -3,7 +3,7 @@
 </script>
 
 <div class="ttip">
-  <h3>{detail.props.apple_name}</h3>
+  <h3>{detail.props.apple_type}</h3>
   <p><span>Min:</span> {detail.props.min}</p>
   <p><span>Mean:</span> {detail.props.mean}</p>
   <p><span>Max:</span> {detail.props.max}</p>
