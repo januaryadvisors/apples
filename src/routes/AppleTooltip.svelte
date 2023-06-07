@@ -4,20 +4,33 @@
 
 <div class="ttip">
   <h3>{detail.props.apple_type}</h3>
-  <p><span>Min:</span> {detail.props.min}</p>
-  <p><span>Mean:</span> {detail.props.mean}</p>
-  <p><span>Max:</span> {detail.props.max}</p>
+  <div class="content">
+    <p><span>Min score</span> {detail.props.min}</p>
+    <p><span>Mean score</span> <strong>{detail.props.mean}</strong></p>
+    <p><span>Max score</span> {detail.props.max}</p>
+  </div>
 </div>
 
 <style>
   .ttip {
-    padding: 5px;
+    color: #251e19;
+  }
+  .content {
+    padding: 15px;
+    padding-top: 5px;
   }
   p {
     margin: 0px;
-    margin-top: 5px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
   }
   h3 {
-    margin: 10px 0px;
+    padding: 20px 0px;
+    padding-bottom: 15px;
+    text-align: center;
+    background-color: #f2ecd5;
+    border-radius: 6px 6px 0px 0px;
+    margin: 0px;
   }
 </style>
