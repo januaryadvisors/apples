@@ -97,7 +97,7 @@ score_raw %>%
 
 # how does appearance relate to taste for each apple?
 summary_scores %>% 
-  filter(metric %in% c("expected taste", "taste")) %>% 
+  filter(metric %in% c("name quality", "taste")) %>% 
   ggplot(aes(x = metric, y = mean, group = apple_type)) + 
   geom_point() +
   geom_errorbar(aes(ymin = min, ymax = max),
