@@ -1,0 +1,61 @@
+apple_type,metric,mean,min,max
+"Cosmic Crisp",appearance,3.4,1,5
+"Cosmic Crisp",expected taste,3.28,2,5
+"Cosmic Crisp",name quality,3.35,1,5
+"Cosmic Crisp",taste,3.17,1.5,4.5
+"Envy",appearance,3.3,2,4.5
+"Envy",expected taste,3.35,2,4.5
+"Envy",name quality,2.1,1,4
+"Envy",taste,3.73,3,5
+"Evercrisp",appearance,2.83,1,4.5
+"Evercrisp",expected taste,2.75,1.5,4
+"Evercrisp",name quality,3.22,2,4
+"Evercrisp",taste,2.72,2,5
+"Fuji",appearance,2.7,1,5
+"Fuji",expected taste,2.88,1,5
+"Fuji",name quality,2.95,1,4
+"Fuji",taste,3.1,2,4
+"Granny Smith",appearance,3.35,1.5,5
+"Granny Smith",expected taste,2.4,1,4.5
+"Granny Smith",name quality,3.3,1,5
+"Granny Smith",taste,2.7,1.5,3.5
+"Honeycrisp",appearance,3.05,1.5,5
+"Honeycrisp",expected taste,3.25,2,5
+"Honeycrisp",name quality,3.65,1,5
+"Honeycrisp",taste,2.7,1,4.5
+"Jazz",appearance,3.61,2,5
+"Jazz",expected taste,3.06,1,5
+"Jazz",name quality,3.56,2,5
+"Jazz",taste,3.72,2,5
+"Kanzi",appearance,3.83,2,5
+"Kanzi",expected taste,3.22,2,4
+"Kanzi",name quality,3.22,1,5
+"Kanzi",taste,3.7,3,4
+"McIntosh",appearance,3.81,2,5
+"McIntosh",expected taste,3.31,2,5
+"McIntosh",name quality,2.78,1,5
+"McIntosh",taste,2.81,0,4
+"Opal Gold",appearance,3.17,1,5
+"Opal Gold",expected taste,3.31,1,5
+"Opal Gold",name quality,3.83,3,5
+"Opal Gold",taste,2.54,1,4.5
+"Red Delicious",appearance,2.22,1,4
+"Red Delicious",expected taste,2.11,1,5
+"Red Delicious",name quality,3.56,2,5
+"Red Delicious",taste,2.17,1,4
+"Ruby Frost",appearance,3.06,2,5
+"Ruby Frost",expected taste,2.83,1.5,4
+"Ruby Frost",name quality,3,1,4
+"Ruby Frost",taste,3.36,2,5
+"Snap Dragon",appearance,3.17,2,4
+"Snap Dragon",expected taste,2.89,2,4
+"Snap Dragon",name quality,2.39,1,3.5
+"Snap Dragon",taste,3.69,2.5,4.5
+"Sweetango",appearance,3.5,2,5
+"Sweetango",expected taste,3.17,2,5
+"Sweetango",name quality,2.81,1,4
+"Sweetango",taste,3.56,2,4
+"Wild Twist",appearance,3.61,2,5
+"Wild Twist",expected taste,3.5,2.5,5
+"Wild Twist",name quality,3.11,2,5
+"Wild Twist",taste,4.39,3.5,5

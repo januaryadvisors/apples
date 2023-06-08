@@ -15,7 +15,7 @@
     class="tooltip"
     style="
       top:{evt.detail.e.layerY + offset}px;
-      left:{evt.detail.e.layerX}px;
+      left:{evt.detail.e.layerX - 30}px;
     "
   >
     <slot detail={evt.detail} />
@@ -25,12 +25,13 @@
 <style>
   .tooltip {
     position: absolute;
-    width: 170px;
-    border: 1px solid #ccc;
+    width: 160px;
+    border: 1px solid #c5bb97;
     font-size: 13px;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 1);
     transform: translate(-50%, -100%);
-    padding: 5px;
     z-index: 15;
+    border-radius: 6px;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.1);
   }
 </style>
