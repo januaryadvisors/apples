@@ -6,6 +6,8 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import { raise } from 'layercake';
 
+  export let annotations;
+
   const { data, xGet, yGet, xScale, height } = getContext('LayerCake');
 
   // Variables to track svg positioning
@@ -38,7 +40,7 @@
 </script>
 
 <g class="dot-plot" on:mouseout={handleMouseout} on:blur={handleMouseout}>
-  {#each $data as row}
+  {#each $data as row, rowIndex}
     {@const yVals = $yGet(row)}
     {@const xVal = $xGet(row)}
     <g class="dot-row">
@@ -53,6 +55,23 @@
       {#each yVals as appleY, i}
         <!-- Currently, only displaying apple graphic for the mean value (at index 0) -->
         {#if i === 0}
+          {#if annotations.find(annotationObj => annotationObj.apple_type === row.apple_type)}
+            {@const directionMultiplier = rowIndex > $data.length / 2 ? -0.8 : 1}
+            {@const annotationLineStartX = xVal + midLength - 50 * directionMultiplier}
+            {@const annotationLineStartY = -40}
+            {@const annotationLineEndX = xVal + midLength - 20 * directionMultiplier}
+            {@const annotationLineEndY = appleY}
+            <path
+              d="M {annotationLineStartX} {annotationLineStartY} 
+                C {annotationLineStartX - 5 * directionMultiplier} {annotationLineStartY + 20}, 
+                {annotationLineEndX - 20 * directionMultiplier} {annotationLineEndY - 10}, 
+                {annotationLineEndX} {annotationLineEndY}"
+              stroke="#999"
+              stroke-dasharray={2}
+              fill="transparent"
+              class="annotation"
+            />
+          {/if}
           <svg
             class="apple"
             width="{appleWidth}px"

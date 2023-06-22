@@ -14,11 +14,51 @@
   import AppleTooltip from './AppleTooltip.svelte';
 
   // Sorting options & selection, initialized to popular
-  const DIVISIVE_SORT = (a, b) => Math.abs(b.max - b.min) - Math.abs(a.max - a.min);
-  const POPULAR_SORT = (a, b) => b.mean - a.mean;
-  const NAME_SORT = (a, b) => a.apple_type.localeCompare(b.apple_type);
-  const sortOptions = [POPULAR_SORT, DIVISIVE_SORT, NAME_SORT];
-  let currentSortIndex = 0;
+  const DIVISIVE_SORT = 'divisive';
+  const POPULAR_SORT = 'popular';
+  const NAME_SORT = 'name';
+  const sortInfo = {
+    [DIVISIVE_SORT]: {
+      sortFunc: (a, b) => Math.abs(b.max - b.min) - Math.abs(a.max - a.min),
+      annotations: [
+        {
+          apple_type: 'McIntosh',
+          annotation: `The <strong>McIntosh</strong> was our most divisive apple. Some loved the texture, while Carly had to spit it out.`,
+        },
+        {
+          apple_type: 'Kanzi',
+          annotation: `Everyone agreed - the <strong>Kanzi</strong> is a pretty good apple! All scores were between 3 and 4.`,
+        },
+      ],
+    },
+    [POPULAR_SORT]: {
+      sortFunc: (a, b) => b.mean - a.mean,
+      annotations: [
+        {
+          apple_type: 'Wild Twist',
+          annotation: `<strong>Wild Twist</strong> was the clear crowd favorite, scoring highly across all team members.`,
+        },
+        {
+          apple_type: 'Red Delicious',
+          annotation: `<span>Smith was our strongest advocate for the trailing <strong>Red Delicious</strong>.</span><p style="margin: 7px 0px;">"Oh god" - <em>Kelsey</em></p>"C'mon, it's not that bad" - <em>Smith</em>`,
+        },
+      ],
+    },
+    [NAME_SORT]: {
+      sortFunc: (a, b) => a.apple_type.localeCompare(b.apple_type),
+      annotations: [
+        {
+          apple_type: 'Envy',
+          annotation: `<span>Carly knows her <strong>Envy</strong> apple! Jeff tasted them everywhere.</span><p style="margin: 7px 0px;">"That's an envy" - <em>Carly on the Envy</em></p>"That's an envy" - <em>Jeff on the Envy, Sweetango, and Cosmic Crisp</em>`,
+        },
+        {
+          apple_type: 'Ruby Frost',
+          annotation: `<span>The <strong>Ruby Frost</strong> wasn't our most divisive apple, but it split some opinions.</span><p style="margin: 7px 0px;">"Oh hell yeah" - <em>Jeff</em></p>"Something's wrong" - <em>Carly</em>`,
+        },
+      ],
+    },
+  };
+  let currentSort = POPULAR_SORT;
 
   let data = rawData
     .filter(appleRow => appleRow.metric === 'taste')
@@ -40,18 +80,29 @@
 </script>
 
 <div class="sorting-section">
-  <h3>Sort by</h3>
+  <h3>Sort scores by</h3>
   <div class="sorting-buttons">
-    <button class:selected={currentSortIndex === 0} on:click={() => (currentSortIndex = 0)}
-      >Popularity</button
+    <button
+      class:selected={currentSort === POPULAR_SORT}
+      on:click={() => (currentSort = POPULAR_SORT)}>Popularity</button
     >
-    <button class:selected={currentSortIndex === 1} on:click={() => (currentSortIndex = 1)}
-      >Divisiveness</button
+    <button
+      class:selected={currentSort === DIVISIVE_SORT}
+      on:click={() => (currentSort = DIVISIVE_SORT)}>Divisiveness</button
     >
-    <button class:selected={currentSortIndex === 2} on:click={() => (currentSortIndex = 2)}
+    <button class:selected={currentSort === NAME_SORT} on:click={() => (currentSort = NAME_SORT)}
       >Name</button
     >
   </div>
+</div>
+<div class="annotations">
+  {#each sortInfo[currentSort].annotations as annotationObj}
+    <div class="annotation">
+      <div class="content">
+        {@html annotationObj.annotation}
+      </div>
+    </div>
+  {/each}
 </div>
 <div class="chart-container">
   <LayerCake
@@ -59,10 +110,10 @@
     x={xKey}
     y={yKey}
     xScale={scaleBand().paddingInner([0.05]).round(true)}
-    xDomain={data.sort(sortOptions[currentSortIndex]).map(d => d.apple_type)}
+    xDomain={data.sort(sortInfo[currentSort].sortFunc).map(d => d.apple_type)}
     yDomain={[0, null]}
     yPadding={[10, 0]}
-    data={data.sort(sortOptions[currentSortIndex])}
+    data={data.sort(sortInfo[currentSort].sortFunc)}
   >
     <!-- Tooltip for showing apple details -->
     <Html pointerEvents={false}>
@@ -76,6 +127,7 @@
       <AxisX gridlines={false} />
       <AxisY gridlines={false} />
       <VerticalLinePlot
+        annotations={sortInfo[currentSort].annotations}
         on:mousemove={event => (evt = hideTooltip = event)}
         on:mouseout={() => (hideTooltip = true)}
       />
@@ -90,18 +142,35 @@
     The point being it needs dimensions since the <LayerCake> element will
     expand to fill it.
   */
+  .annotations {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .annotation {
+    max-width: 230px;
+    border: 1px solid #aaa;
+    padding: 10px;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
   .chart-container {
     width: 100%;
     height: 400px;
+    margin-top: 40px;
   }
   .sorting-section {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
   .sorting-section h3 {
     margin: 0px;
-    margin-right: 10px;
+    margin-bottom: 10px;
   }
   .sorting-buttons {
     display: flex;

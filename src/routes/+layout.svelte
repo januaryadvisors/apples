@@ -15,7 +15,7 @@
     padding: 0px 20px;
   }
   .content {
-    width: 1000px;
+    width: 1100px;
     max-width: 100%;
   }
 </style>

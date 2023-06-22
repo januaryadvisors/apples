@@ -5,9 +5,10 @@
 <div class="ttip">
   <h3>{detail.props.apple_type}</h3>
   <div class="content">
-    <p><span>Min score</span> {detail.props.min}</p>
-    <p><span>Mean score</span> <strong>{detail.props.mean}</strong></p>
     <p><span>Max score</span> {detail.props.max}</p>
+    <p><span>Mean score</span> <strong>{detail.props.mean}</strong></p>
+    <p><span>Min score</span> {detail.props.min}</p>
+
   </div>
 </div>
 
