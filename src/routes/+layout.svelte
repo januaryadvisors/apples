@@ -1,5 +1,5 @@
 <script>
-  import "$lib/styles/app.css";
+  import '$lib/styles/app.css';
 </script>
 
 <div class="wrapper">
@@ -17,5 +17,6 @@
   .content {
     width: 1100px;
     max-width: 100%;
+    padding-bottom: 50px;
   }
 </style>

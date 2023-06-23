@@ -1,7 +1,7 @@
 <script>
-  import AppleBoxPlot from './AppleBoxPlot.svelte';
   import appleRatingsGraphic from '$lib/assets/labeled_ratings.svg';
-  import ScoresByApple from './ScoresByApple.svelte';
+  import TasteScoresHeader from '$lib/components/TasteScoresHeader.svelte';
+  import TasteScoresChart from './TasteScoresChart.svelte';
 </script>
 
 <h1>Title & purpose pending ...</h1>
@@ -13,10 +13,8 @@
   <img src={appleRatingsGraphic} alt="Apple ratings graphic" />
 </div>
 
-<h2>Our apple scores</h2>
-<div style="margin: 30px 0px;">
-  <ScoresByApple />
-</div>
+<TasteScoresHeader />
+<TasteScoresChart />
 
 <style>
   .ratings-graphic-wrapper {

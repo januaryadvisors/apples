@@ -5,14 +5,20 @@
 <script>
   import { createEventDispatcher, getContext } from 'svelte';
   import { raise } from 'layercake';
+  import { showAnnotations } from '../../stores';
 
   export let annotations;
+
+  // Track screen size
+  let screenWidth, isMobile;
+  $: isMobile = screenWidth < 600;
 
   const { data, xGet, yGet, xScale, height } = getContext('LayerCake');
 
   // Variables to track svg positioning
-  const appleWidth = 37;
-  const appleHeight = 33;
+  let appleWidth, appleHeight;
+  $: appleWidth = isMobile ? 28 : 37;
+  $: appleHeight = isMobile ? 26 : 33;
   $: midLength = $xScale.bandwidth() / 2;
 
   // Store hovered apple info for chomp display
@@ -39,6 +45,8 @@
   };
 </script>
 
+<svelte:window bind:outerWidth={screenWidth} />
+
 <g class="dot-plot" on:mouseout={handleMouseout} on:blur={handleMouseout}>
   {#each $data as row, rowIndex}
     {@const yVals = $yGet(row)}
@@ -55,15 +63,16 @@
       {#each yVals as appleY, i}
         <!-- Currently, only displaying apple graphic for the mean value (at index 0) -->
         {#if i === 0}
-          {#if annotations.find(annotationObj => annotationObj.apple_type === row.apple_type)}
+          <!-- Add dotted lines connecting apples to annotation text boxes -->
+          {#if $showAnnotations && !isMobile && annotations.find(annotationObj => annotationObj.apple_type === row.apple_type)}
             {@const directionMultiplier = rowIndex > $data.length / 2 ? -0.8 : 1}
-            {@const annotationLineStartX = xVal + midLength - 50 * directionMultiplier}
-            {@const annotationLineStartY = -40}
+            {@const annotationLineStartX = xVal + midLength - 20 * directionMultiplier}
+            {@const annotationLineStartY = -10}
             {@const annotationLineEndX = xVal + midLength - 20 * directionMultiplier}
             {@const annotationLineEndY = appleY}
             <path
               d="M {annotationLineStartX} {annotationLineStartY} 
-                C {annotationLineStartX - 5 * directionMultiplier} {annotationLineStartY + 20}, 
+                C {annotationLineStartX - 20 * directionMultiplier} {annotationLineStartY + 20}, 
                 {annotationLineEndX - 20 * directionMultiplier} {annotationLineEndY - 10}, 
                 {annotationLineEndX} {annotationLineEndY}"
               stroke="#999"
