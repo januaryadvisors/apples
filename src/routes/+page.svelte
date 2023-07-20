@@ -2,6 +2,7 @@
   import appleRatingsGraphic from '$lib/assets/labeled_ratings.svg';
   import TasteScoresHeader from '$lib/components/TasteScoresHeader.svelte';
   import TasteScoresChart from './TasteScoresChart.svelte';
+  import TasteScoresChartByApple from './TasteScoresChartByApple.svelte';
 </script>
 
 <h1>Title & purpose pending ...</h1>
@@ -15,6 +16,7 @@
 
 <TasteScoresHeader />
 <TasteScoresChart />
+<TasteScoresChartByApple />
 
 <style>
   .ratings-graphic-wrapper {
