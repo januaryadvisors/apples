@@ -6,6 +6,7 @@
 	import { scaleBand } from 'd3-scale';
 	import AxisX from '$lib/components/charts/AxisX.svelte';
 	import AxisY from '$lib/components/charts/AxisY.svelte';
+	import Line from '$lib/components/charts/Line.svelte';
 
 	// This example loads csv data as json using @rollup/plugin-dsv
 	import rawData from '$lib/constants/summaryScores.csv';
@@ -37,18 +38,19 @@
 			});
 		});
 	});
+
+	console.log(data);
 </script>
 
-<!-- <div style="width: 100%; height: 400px; marginTop: 40px; paddingBottom: 60px">
+<div style="width: 100%; height: 400px; marginTop: 40px; paddingBottom: 60px">
   <LayerCake
     padding={{ right: 10, bottom: 20, left: 30 }}
-    x={xKey}
-    y={yKey}
-    xScale={scaleBand().paddingInner([0.05]).round(true)}
-    xDomain={data.sort(SORT_INFO[$currentTasteSort].sortFunc).map(d => d.apple_type)}
+    x={"x"}
+    y={"y"}
+    xDomain={[0, 1]}
     yDomain={[0, null]}
     yPadding={[10, 0]}
-    data={data.sort(SORT_INFO[$currentTasteSort].sortFunc)}
+    data={[{x: 0, y: 3}, {x: 1, y: 5}]}
   >
     <Html pointerEvents={false}>
       {#if hideTooltip !== true}
@@ -58,13 +60,8 @@
       {/if}
     </Html>
     <Svg>
-      <AxisX gridlines={false} diagonal={true} />
       <AxisY gridlines={false} />
-      <VerticalLinePlot
-        annotations={SORT_INFO[$currentTasteSort].annotations}
-        on:mousemove={event => (evt = hideTooltip = event)}
-        on:mouseout={() => (hideTooltip = true)}
-      />
+      <Line />
     </Svg>
   </LayerCake>
-</div> -->
+</div>
