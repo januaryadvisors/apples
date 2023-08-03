@@ -95,8 +95,8 @@
     justify-content: space-between;
   }
   .apple-chart {
-    width: 40%;
-    height: 300px;
+    width: 25%;
+    height: 200px;
     margin-right: 40px;
     margin-bottom: 100px;
   }

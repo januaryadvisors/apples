@@ -5,7 +5,7 @@
 <script>
   import { getContext } from 'svelte';
 
-  const { data, xGet, yGet } = getContext('LayerCake');
+  const { data, xGet, yGet, height, yScale } = getContext('LayerCake');
 
   export let expectedMin, expectedMax, expectedMean, tasteMin, tasteMax, tasteMean;
 
@@ -18,19 +18,36 @@
       .join('L');
 
   $: tasteX = $xGet($data[1]);
+
+  console.log($yScale(4));
 </script>
 
 <!-- Expected taste min-max -->
-<line x1={0} x2={0} y1={(5 - expectedMax) * 54} y2={(5 - expectedMin) * 54} class="path-line" />
+<line
+  x1={0}
+  x2={0}
+  y1={(5 - expectedMax) * $yScale(4)}
+  y2={(5 - expectedMin) * $yScale(4)}
+  class="path-line"
+/>
+
+<!-- Expected taste circle for mean -->
+<circle cx={0} cy={(5 - expectedMean) * $yScale(4)} r="8" fill="#eed8a0" />
 
 <!-- Main line -->
 <path class="path-line" d={path} />
 
-<circle cx={0} cy={(5 - expectedMean) * 54} r="9" fill="#eed8a0" />
-<circle cx={tasteX} cy={(5 - tasteMean) * 54} r="9" fill="#eed8a0" />
-
 <!-- Taste min-max -->
-<line x1={tasteX} x2={tasteX} y1={(5 - tasteMax) * 54} y2={(5 - tasteMin) * 54} class="path-line" />
+<line
+  x1={tasteX}
+  x2={tasteX}
+  y1={(5 - tasteMax) * $yScale(4)}
+  y2={(5 - tasteMin) * $yScale(4)}
+  class="path-line"
+/>
+
+<!-- Taste circle for mean -->
+<circle cx={tasteX} cy={(5 - tasteMean) * $yScale(4)} r="8" fill="#eed8a0" />
 
 <style>
   .path-line {
