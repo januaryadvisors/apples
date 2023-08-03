@@ -2,28 +2,41 @@
   @component
   Generates an SVG area shape using the `area` function from [d3-shape](https://github.com/d3/d3-shape).
  -->
- <script>
-    import { getContext } from 'svelte';
-  
-    const { data, xGet, yGet } = getContext('LayerCake');
-  
-    /** @type {String} [stroke='#ab00d6'] - The shape's fill color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
-    export let stroke = '#ab00d6';
-  
-    $: path = 'M' + $data
+<script>
+  import { getContext } from 'svelte';
+
+  const { data, xGet, yGet } = getContext('LayerCake');
+
+  export let expectedMin, expectedMax, expectedMean, tasteMin, tasteMax, tasteMean;
+
+  $: path =
+    'M' +
+    $data
       .map(d => {
         return $xGet(d) + ',' + $yGet(d);
       })
       .join('L');
-  </script>
-  
-  <path class='path-line' d='{path}' {stroke}></path>
-  
-  <style>
-    .path-line {
-      fill: none;
-      stroke-linejoin: round;
-      stroke-linecap: round;
-      stroke-width: 2;
-    }
-  </style>
+
+  $: tasteX = $xGet($data[1]);
+</script>
+
+<!-- Expected taste min-max -->
+<line x1={0} x2={0} y1={(5 - expectedMax) * 54} y2={(5 - expectedMin) * 54} class="path-line" />
+
+<!-- Main line -->
+<path class="path-line" d={path} />
+
+<circle cx={0} cy={(5 - expectedMean) * 54} r="9" fill="#eed8a0" />
+<circle cx={tasteX} cy={(5 - tasteMean) * 54} r="9" fill="#eed8a0" />
+
+<!-- Taste min-max -->
+<line x1={tasteX} x2={tasteX} y1={(5 - tasteMax) * 54} y2={(5 - tasteMin) * 54} class="path-line" />
+
+<style>
+  .path-line {
+    stroke: #eed8a0;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+</style>
