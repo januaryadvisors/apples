@@ -18,8 +18,6 @@
       .join('L');
 
   $: tasteX = $xGet($data[1]);
-
-  console.log($yScale(4));
 </script>
 
 <!-- Expected taste min-max -->
