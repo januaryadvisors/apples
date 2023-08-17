@@ -38,11 +38,18 @@
       });
     });
   });
+
+  let tooltipParentEl;
 </script>
 
 <h2>Taste scores by apple:</h2>
 
-<div id="grid">
+<div id="grid" bind:this={tooltipParentEl}>
+  {#if hideTooltip !== true}
+    <Tooltip {evt} parentEl={tooltipParentEl} let:detail>
+      <AppleTooltip {detail} />
+    </Tooltip>
+  {/if}
   {#each Object.entries(data) as [appleName, d]}
     <div class="apple-chart">
       <h3 style="display: flex; justify-content: center;">{appleName}</h3>
@@ -58,13 +65,6 @@
           { x: 1, y: d['taste']['mean'] },
         ]}
       >
-        <Html pointerEvents={false}>
-          {#if hideTooltip !== true}
-            <Tooltip {evt} let:detail>
-              <AppleTooltip {detail} />
-            </Tooltip>
-          {/if}
-        </Html>
         <Svg>
           <AxisY />
           <AxisX
@@ -75,12 +75,15 @@
             }}
           />
           <Line
+            {appleName}
             expectedMin={d['expected taste']['min']}
             expectedMax={d['expected taste']['max']}
             expectedMean={d['expected taste']['mean']}
             tasteMin={d['taste']['min']}
             tasteMax={d['taste']['max']}
             tasteMean={d['taste']['mean']}
+            on:mousemove={event => (evt = hideTooltip = event)}
+            on:mouseout={() => (hideTooltip = true)}
           />
         </Svg>
       </LayerCake>
@@ -93,6 +96,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    position: relative;
   }
   .apple-chart {
     width: 25%;

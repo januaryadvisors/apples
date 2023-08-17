@@ -5,10 +5,9 @@
 <div class="ttip">
   <h3>{detail.props.apple_type}</h3>
   <div class="content">
-    <p><span>Max score</span> {detail.props.max}</p>
-    <p><span>Mean score</span> <strong>{detail.props.mean}</strong></p>
-    <p><span>Min score</span> {detail.props.min}</p>
-
+    {#each detail.props.values as value}
+      <p><span>{value[0]}</span> {value[1]}</p>
+    {/each}
   </div>
 </div>
 
@@ -27,8 +26,7 @@
     justify-content: space-between;
   }
   h3 {
-    padding: 20px 0px;
-    padding-bottom: 15px;
+    padding: 8px;
     text-align: center;
     background-color: #f2ecd5;
     border-radius: 6px 6px 0px 0px;
