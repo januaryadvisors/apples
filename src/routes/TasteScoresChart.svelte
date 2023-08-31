@@ -34,6 +34,8 @@
       d[name] = +d[name];
     });
   });
+
+  let tooltipParentEl;
 </script>
 
 <p>
@@ -69,7 +71,13 @@
     {/each}
   </div>
 {/if}
-<div class="chart-container">
+<div class="chart-container" bind:this={tooltipParentEl}>
+  {#if hideTooltip !== true}
+    <!-- Tooltip for showing apple details -->
+    <Tooltip {evt} parentEl={tooltipParentEl} let:detail>
+      <AppleTooltip {detail} />
+    </Tooltip>
+  {/if}
   <LayerCake
     padding={{ right: 10, bottom: 20, left: 30 }}
     x={xKey}
@@ -80,14 +88,6 @@
     yPadding={[10, 0]}
     data={data.sort(SORT_INFO[$currentTasteSort].sortFunc)}
   >
-    <!-- Tooltip for showing apple details -->
-    <Html pointerEvents={false}>
-      {#if hideTooltip !== true}
-        <Tooltip {evt} let:detail>
-          <AppleTooltip {detail} />
-        </Tooltip>
-      {/if}
-    </Html>
     <Svg>
       <AxisX gridlines={false} diagonal={true} />
       <AxisY gridlines={false} />
@@ -163,6 +163,7 @@
     height: 400px;
     margin-top: 40px;
     padding-bottom: 60px;
+    position: relative;
   }
   @media only screen and (max-width: 600px) {
     .annotations {

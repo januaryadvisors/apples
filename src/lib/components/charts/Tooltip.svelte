@@ -7,15 +7,29 @@
   export let evt = {};
 
   /** @type {Number} [offset=-35] - A y-offset from the hover point, in pixels. */
-  export let offset = -35;
+  export let offsetY = -35;
+
+  export let parentEl;
+
+  let tooltipXConstrained;
+  let tooltipY;
+
+  $: {
+    const bounds = parentEl.getBoundingClientRect();
+    const tooltipX = evt.detail ? evt.detail.e.clientX - bounds.left : 0;
+    tooltipY = evt.detail ? evt.detail.e.clientY - bounds.top + offsetY : 0;
+    const minX = 100 - bounds.left;
+    const maxX = window.innerWidth - bounds.left - 100;
+    tooltipXConstrained = Math.min(maxX, Math.max(minX, tooltipX));
+  }
 </script>
 
 {#if evt.detail}
   <div
     class="tooltip"
     style="
-      top:{evt.detail.e.layerY + offset}px;
-      left:{evt.detail.e.layerX - 30}px;
+      top:{tooltipY}px;
+      left:{tooltipXConstrained}px;
     "
   >
     <slot detail={evt.detail} />
