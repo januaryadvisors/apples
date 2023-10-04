@@ -5,7 +5,7 @@
   import TasteScoresChartByApple from './TasteScoresChartByApple.svelte';
 </script>
 
-<h1>Title & purpose pending ...</h1>
+<h1>Core Scores</h1>
 <p>Intro text ...</p>
 
 <h2>Approach to ranking</h2>
