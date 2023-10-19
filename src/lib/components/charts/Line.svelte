@@ -42,6 +42,7 @@
   };
 
   export let appleName, expectedMin, expectedMax, expectedMean, tasteMin, tasteMax, tasteMean;
+  export let showAnnotation = false;
 
   $: path =
     'M' +
@@ -118,6 +119,19 @@
     y={(5 - tasteMean) * $yScale(4)}
   />
 </g>
+
+{#if showAnnotation}
+  <path
+    d={`M -20 -60
+    C -30 -60,
+    -30 ${(5 - expectedMean) * $yScale(4)},
+    -20 ${(5 - expectedMean) * $yScale(4)}`}
+    stroke="#999"
+    stroke-dasharray={2}
+    fill="transparent"
+    class="annotation"
+  />
+{/if}
 
 <style>
   .path-line {
