@@ -105,12 +105,14 @@
   </p>
   <div class="header-flex">
     <div class="title-with-sort">
-      <h2>Apples that tasted</h2>
-      <select on:change={e => currentRankFilter.set(e.target.value)} value={$currentRankFilter}>
-        {#each ranks as rankObject}
-          <option value={rankObject.key}>{rankObject.label}</option>
-        {/each}
-      </select>
+      <div class="select-flex">
+        <h2>Apples that tasted</h2>
+        <select on:change={e => currentRankFilter.set(e.target.value)} value={$currentRankFilter}>
+          {#each ranks as rankObject}
+            <option value={rankObject.key}>{rankObject.label}</option>
+          {/each}
+        </select>
+      </div>
     </div>
     <div class="checkbox-wrapper">
       <label>
@@ -198,13 +200,17 @@
     justify-content: space-between;
     align-items: center;
   }
+  .select-flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   .title-with-sort {
     display: flex;
     justify-content: flex-start;
     align-items: center;
   }
   select {
-    margin-left: 10px;
     font-size: 1.45rem;
     font-weight: 600;
     color: #333;
@@ -245,6 +251,9 @@
     .header-flex {
       flex-direction: column;
       align-items: flex-start;
+    }
+    .select-flex {
+      flex-wrap: wrap;
     }
     .checkbox-wrapper {
       margin-top: 10px;
