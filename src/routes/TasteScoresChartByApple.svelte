@@ -99,10 +99,6 @@
 </script>
 
 <div class="header">
-  <p>
-    As the old saying goes, you eat first with your eyes. Before taking a bite, we judged the apples
-    by the way we <em>expected</em> them to taste. We compare that score to the actual taste score below.
-  </p>
   <div class="header-flex">
     <div class="title-with-sort">
       <div class="select-flex">
@@ -125,6 +121,10 @@
       </label>
     </div>
   </div>
+  <p>
+    As the old saying goes, you eat first with your eyes. Before taking a bite, we judged the apples
+    by the way we <em>expected</em> them to taste. We compare that score to the actual taste score below.
+  </p>
 </div>
 <div>
   <div clasName="rank-block">
@@ -199,6 +199,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  h2 {
+    margin: 0px;
   }
   .select-flex {
     display: flex;
